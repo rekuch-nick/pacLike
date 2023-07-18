@@ -3,6 +3,12 @@ if(state == "gen"){
 	state = "play";
 }
 
+if(state == "reset"){
+	with(objMob){ instance_destroy(); }
+	mobSpawnAll();
+	state = "play";
+}
+
 
 
 
@@ -21,7 +27,7 @@ if(state == "play"){
 		scatterCD --;
 		if(scatterCD < 1){
 			scatterCD = scatterCDMax;
-			scatterTime = 30 * 4;
+			scatterTime = scatterTimeMax;
 			with(objMob){
 				xLast = xSpot;
 				yLast = ySpot;

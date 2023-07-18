@@ -13,10 +13,14 @@ if(stun > 0){
 }
 
 
+
+
+
+
 dir = 0;
 if(dir == 0){
 	//choose goal
-	if(ww.scatterTime > 0 && isEnemy){
+	if( (ww.scatterTime > 0 && isEnemy) || hurtTime > 0){
 		xTar = xHome;
 		yTar = yHome;
 	} else {
@@ -24,6 +28,9 @@ if(dir == 0){
 			xTar = pc.xSpot; yTar = pc.ySpot;
 		} else if(moveType == "right exit"){
 			xTar = 23; yTar = ww.wrapRow;
+			if(xTar == xSpot && yTar == ySpot){
+				instance_destroy();
+			}
 		} else if(moveType == "random"){
 			xTar = pc.xSpot + 12;
 			yTar = pc.ySpot + 12;
@@ -125,12 +132,7 @@ if(xSpot != xx || ySpot != yy){
 	xSpot = xx; ySpot = yy;
 }
 
-if(xSpot == pc.xSpot && ySpot == pc.ySpot){
-	
-	if(isEnemy){
-		ww.state = "ded"; ////
-	}
-}
+
 
 
 

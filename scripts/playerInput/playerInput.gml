@@ -19,4 +19,7 @@ function playerInput(){
 	pressingEsc = keyboard_check(vk_escape);
 	pressedEsc = keyboard_check_pressed(vk_escape);
 	
+	pressedUp = keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("W"));
+	pressedDown = keyboard_check_pressed(vk_down) || keyboard_check_pressed(ord("S"));
+	
 }

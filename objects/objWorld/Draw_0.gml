@@ -1,4 +1,18 @@
 
+var pointsString = "" + string(pc.sp);
+var n = 9 - string_length(pointsString);
+for(var i=0; i<n; i++){
+	pointsString = "0" + pointsString;
+}
+draw_text(770, 4, pointsString);
+
+draw_sprite_stretched(imgPlayerSmall, 0, 770, 730, 32, 32);
+draw_text(806, 736, "x " + string(pc.hp));
+
+
+
+
+
 if(state == "play"){
 	for(var a=0; a<24; a++){ for(var b=0; b<24; b++){
 		if(bmap[a, b] != noone){

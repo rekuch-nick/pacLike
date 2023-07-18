@@ -13,3 +13,6 @@ rage02 = 0;
 rage03 = 0;
 
 isEnemy = true;
+isTreasure = false;
+
+hurtTime = 0;

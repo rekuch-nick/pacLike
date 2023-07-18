@@ -10,16 +10,19 @@ if(ww.state == "ded"){
 		y += irandom_range(-2, 2);
 	}
 	
-	if(image_yscale >= 12){
-		image_alpha = 1;
-		image_angle = 0;
-		image_xscale = 4;
-		image_yscale = 4;
-		ww.state = "gen";
-		dir = 0;
-		x = 340;
-		y = 528;
-		xSpot = floor(x / 32); ySpot = floor(y / 32);
+	if(image_yscale >= 5.5 && hp > 0){
+		hp --;
+		image_alpha = 1; image_angle = 0; image_xscale = 4; image_yscale = 4;
+		ww.state = "reset";
+		dir = 0; x = 340; y = 528; xSpot = floor(x / 32); ySpot = floor(y / 32);
+		return;
+	} else if(image_yscale >= 12){
+		if(sp > spMax){ spMax = sp; }
+		image_alpha = 1; image_angle = 0; image_xscale = 4; image_yscale = 4;
+		dir = 0; x = 340; y = 528; xSpot = floor(x / 32); ySpot = floor(y / 32);
+		ww.state = "title";
+		instance_create_depth(0, 0, -1000, objScreenTitle);
+		
 	}
 }
 
@@ -87,15 +90,15 @@ for(var a=xSpot-magRange; a<=xSpot+magRange; a++){ for(var b=ySpot-magRange; b<=
 	if(ww.pmap[a, b] == imgPill){
 		ww.pmap[a, b] = noone;
 		ww.pills --;
+		sp += scorefromDots;
 		
 		if(ww.pills == floor(ww.pillsMax * .75)){ with(objMob){ moveSpeed += rage01; } }
 		if(ww.pills == floor(ww.pillsMax *  .5)){ with(objMob){ moveSpeed += rage02; } }
 		if(ww.pills == floor(ww.pillsMax * .25)){ with(objMob){ moveSpeed += rage03; } }
 		
 		if(ww.pills == floor(ww.pillsMax *  .6)){ 
-			var a = 0;
-			var b = ww.wrapRow;
-			instance_create_depth(a * 32 + 16, b * 32 + 16, depth + 1, objTreasure);
+			var a = 0; var b = ww.wrapRow;
+			instance_create_depth(a * 32 + 16, b * 32 + 16, ww.depth - 1, objTreasure);
 		}
 		
 		if(ww.pills - ignoreDots < 1){ ww.state = "gen"; }
@@ -104,9 +107,41 @@ for(var a=xSpot-magRange; a<=xSpot+magRange; a++){ for(var b=ySpot-magRange; b<=
 }}
 
 
+
+
+
+
+
+
+
+with(objMob){
+	if(xSpot == pc.xSpot && ySpot == pc.ySpot){
+	
+		if(isEnemy && stun < 1 && hurtTime < 1){
+			ww.state = "ded"; ////
+		}
+	
+		if(isTreasure){
+			instance_create_depth(0, 0, -999, objScreenTreasure);
+			instance_destroy();
+		}
+	}
+}
+
+
+
+
+
+
+
+
 if(dir == 0){ image_index = 0; }
 
 
 
 
 if(keyboard_check_pressed(vk_backspace)){ ww.state = "gen"; }
+if(keyboard_check_pressed(vk_f1)){ 
+	var a = 0; var b = ww.wrapRow;
+	instance_create_depth(a * 32 + 16, b * 32 + 16, ww.depth - 1, objTreasure);
+}
