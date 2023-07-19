@@ -14,6 +14,22 @@ draw_text(806, 736, "x " + string(pc.hp));
 
 
 if(state == "play"){
+	
+	for(var i=0; i<array_length(fmaps); i++){
+		var m = fmaps[i];
+		for(var a=m.a; a<m.a+m.w; a++){
+			for(var b=m.b; b<m.b+m.h; b++){
+				if(!inBounds(a, b)){ continue; }
+				draw_sprite_stretched(m.img, irandom_range(0, 3), a*32, b*32, 32, 32);
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
 	for(var a=0; a<24; a++){ for(var b=0; b<24; b++){
 		if(bmap[a, b] != noone){
 			draw_sprite_stretched(bmap[a, b], imap[a, b], a * 32, b * 32, 32, 32);			

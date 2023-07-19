@@ -17,7 +17,11 @@ scatterCDMax = 30 * 10;
 
 
 
-ppDotsLess = "-4 required dots";
-ppPickupRange = "+1 pickup range";
-ppDotScore = "+10% score from dots";
+ppDotsLess = "-4 Required Pellets";
+ppPickupRange = "+1 Pickup Range";
+ppDotScore = "+10% Score from Pellets";
 pp1Up = "+1 life";
+ppPowerAmount = "More Power Pellets";
+ppPowerTime = "Power Pellets Last Longer";
+ppPowerEffect = "Longer Enemy Ghost-time";
+ppSpeedUp = "Move a little faster";

@@ -1,4 +1,4 @@
-moveSpeed = 8;
+
 dir = 0;
 
 xSpot = floor(x / 32); ySpot = floor(y / 32);

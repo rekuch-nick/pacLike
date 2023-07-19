@@ -5,7 +5,11 @@ function worldGen(){
 		var n = irandom_range(1, 100);
 	}
 	
+	
+	
 	with(objMob){ instance_destroy(); }
+	gotChest = false;
+	
 	
 	for(var a=0; a<24; a++){
 		for(var b=0; b<24; b++){
@@ -35,6 +39,8 @@ function worldGen(){
 		}
 	}}
 	pillsMax = pills;
+	
+	upgradePills();
 	
 	bmap[pc.xSpot, pc.ySpot] = noone;
 	worldGenBuildImageMap();

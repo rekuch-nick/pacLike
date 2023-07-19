@@ -31,6 +31,8 @@ if(ww.state == "ded"){
 if(ww.state != "play"){ return; }
 
 
+playerCollision();
+
 
 
 if(xIn < 0 && canMoveInDir(4) ){ dir = 4; if(image_xscale > 0){ image_xscale *= -1; } snapToY(); }
@@ -48,6 +50,11 @@ if(dir == 4){ xs = -ms; }
 if(dir == 1){ ys = -ms; }
 if(dir == 3){ ys = ms; }
 
+if(slow){
+	xs = floor(xs * .5);
+	ys = floor(ys * .5);
+}
+slow = false;
 
 d = xs < 0 ? -1 : 1;
 for(var i=0; i<abs(xs); i++){
@@ -92,16 +99,39 @@ for(var a=xSpot-magRange; a<=xSpot+magRange; a++){ for(var b=ySpot-magRange; b<=
 		ww.pills --;
 		sp += scorefromDots;
 		
-		if(ww.pills == floor(ww.pillsMax * .75)){ with(objMob){ moveSpeed += rage01; } }
-		if(ww.pills == floor(ww.pillsMax *  .5)){ with(objMob){ moveSpeed += rage02; } }
-		if(ww.pills == floor(ww.pillsMax * .25)){ with(objMob){ moveSpeed += rage03; } }
+		if(ww.pills == floor(ww.pillsMax * .75)){ with(objMob){ if(moveSpeed < pc.moveSpeed){ moveSpeed += rage01; } } }
+		if(ww.pills == floor(ww.pillsMax *  .5)){ with(objMob){ if(moveSpeed < pc.moveSpeed){ moveSpeed += rage02; } } }
+		if(ww.pills == floor(ww.pillsMax * .25)){ with(objMob){ if(moveSpeed < pc.moveSpeed){ moveSpeed += rage03; } } }
 		
-		if(ww.pills == floor(ww.pillsMax *  .6)){ 
-			var a = 0; var b = ww.wrapRow;
-			instance_create_depth(a * 32 + 16, b * 32 + 16, ww.depth - 1, objTreasure);
+		if(!ww.gotChest && instance_number(objTreasure) < 1){
+			if(ww.pills == floor(ww.pillsMax *  .6) || (ww.pills < floor(ww.pillsMax *  .6) && irandom_range(1, 10) == 1)){ 
+				var a = 0; var b = ww.wrapRow;
+				instance_create_depth(a * 32 + 16, b * 32 + 16, ww.depth - 1, objTreasure);
+			}
 		}
 		
 		if(ww.pills - ignoreDots < 1){ ww.state = "gen"; }
+	}
+	
+	if(ww.pmap[a, b] == imgPowerPill && a == xSpot && b == ySpot){
+		ww.pmap[a, b] = noone;
+		sp += 100;
+		
+		powerTime = powerTimeMax;
+		sprite_index = imgPlayerPower;
+	}
+	
+	if(ww.pmap[a, b] == imgPillNeg && a == xSpot && b == ySpot){
+		ww.pmap[a, b] = noone;
+		sp -= 10;
+		
+		for(var a=0; a<24; a++){ for(var b=0; b<24; b++){
+			if(ww.pmap[a, b] == imgPowerPill){
+				ww.pmap[a, b] = noone;	
+			}
+		}}
+		
+		if(powerTime > 0){ powerTime = 1; }
 	}
 	
 }}
@@ -109,28 +139,25 @@ for(var a=xSpot-magRange; a<=xSpot+magRange; a++){ for(var b=ySpot-magRange; b<=
 
 
 
+playerCollision();
 
 
 
 
 
-with(objMob){
-	if(xSpot == pc.xSpot && ySpot == pc.ySpot){
-	
-		if(isEnemy && stun < 1 && hurtTime < 1){
-			ww.state = "ded"; ////
-		}
-	
-		if(isTreasure){
-			instance_create_depth(0, 0, -999, objScreenTreasure);
-			instance_destroy();
-		}
+
+
+
+if(powerTime > 0){
+	powerTime --;
+	if(powerTime <= 40){
+		image_speed = 7;
+	}
+	if(powerTime <= 0){ 
+		sprite_index = imgPlayer; 
+		image_speed = 3;
 	}
 }
-
-
-
-
 
 
 

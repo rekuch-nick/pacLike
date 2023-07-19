@@ -16,3 +16,11 @@ isEnemy = true;
 isTreasure = false;
 
 hurtTime = 0;
+
+speedChangeChance = 0;
+speedMax = 7;
+speedMin = 2;
+
+effCDMax = 30 * 10;
+effCD = effCDMax / 5;
+effect = noone;
