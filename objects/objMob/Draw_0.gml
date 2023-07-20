@@ -9,7 +9,7 @@ if(hurtTime > 0){
 		draw_self();
 	}
 	
-	if(pc.powerTime > 0 && isEnemy){
+	if( (pc.powerTime > 0  ) && isEnemy){
 		draw_text(x, y - 40, "!");
 	}
 }

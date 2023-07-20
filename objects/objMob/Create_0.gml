@@ -24,3 +24,5 @@ speedMin = 2;
 effCDMax = 30 * 10;
 effCD = effCDMax / 5;
 effect = noone;
+
+ignoreBlackBlocks = false;

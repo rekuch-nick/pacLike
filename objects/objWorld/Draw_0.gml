@@ -6,6 +6,8 @@ for(var i=0; i<n; i++){
 }
 draw_text(770, 4, pointsString);
 
+draw_text(770, 40, "Room " + string(pc.stage) );
+
 draw_sprite_stretched(imgPlayerSmall, 0, 770, 730, 32, 32);
 draw_text(806, 736, "x " + string(pc.hp));
 
@@ -32,8 +34,17 @@ if(state == "play"){
 	
 	for(var a=0; a<24; a++){ for(var b=0; b<24; b++){
 		if(bmap[a, b] != noone){
-			draw_sprite_stretched(bmap[a, b], imap[a, b], a * 32, b * 32, 32, 32);			
-		}
+			if (a == 0 && bmap[a, b] == imgBlockBlack ){ draw_sprite_stretched(imgLock, 0, a * 32, b * 32 - 16, 16, 64); }
+			else if (a == 23 && bmap[a, b] == imgBlockBlack ){ draw_sprite_stretched(imgLock, 0, a * 32 + 16, b * 32 - 16, 16, 64); }
+			else {
+				draw_sprite_stretched(bmap[a, b], imap[a, b], a * 32, b * 32, 32, 32);			
+			}
+		} 
+		
+		
+		
+		
+		
 		if(pmap[a, b] != noone){
 			draw_set_alpha(pAlpha);
 			draw_sprite_stretched(pmap[a, b], 0, a * 32, b * 32, 32, 32);

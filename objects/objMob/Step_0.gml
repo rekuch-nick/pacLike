@@ -25,7 +25,7 @@ if(hurtTime > 0){
 
 if(dir == 0){
 	//choose goal
-	if(pc.powerTime > 0 && isEnemy){
+	if( (pc.powerTime > 0 ) && isEnemy){
 		do{ xTar = xSpot + choose(-1, 0, 1); yTar = ySpot + choose(-1, 0, 1); }
 		until ( (xTar != xSpot || yTar != ySpot) && (xTar != xLast || yTar != yLast) );
 	} else if( (ww.scatterTime > 0 && isEnemy) || hurtTime > 0){
@@ -82,7 +82,7 @@ if(dir == 0){
 		if(i == 4){ var a = xSpot - 1; var b = ySpot; }
 		
 		if(!inBounds(a, b)){ tileScore[i] = 1000000; continue; }
-		if(ww.bmap[a, b] != noone){ tileScore[i] = 1000000; continue; }
+		if(ww.bmap[a, b] != noone && (ww.bmap[a, b] != imgBlockBlack || !ignoreBlackBlocks) ){ tileScore[i] = 1000000; continue; }
 		if(a == xLast && b == yLast){ tileScore[i] = 1000000; continue; }
 		
 		var disToGoal = point_distance(a * 32 + 16, b * 32 + 16, xTar * 32 + 16, yTar * 32 + 16);
@@ -108,6 +108,7 @@ if(dir == 0){
 xs = 0;
 ys = 0;
 ms = moveSpeed;
+if(isEnemy && (pc.powerTime > 0 )){ ms = clamp(ms - 1, 1, ms); }
 if(hurtTime > 0){ ms = 8; }
 if(effect != noone && effCD < 30){ ms = 0; }
 
@@ -127,7 +128,7 @@ for(var i=0; i<abs(xs); i++){
 	//if(x >= ww.roomWidth){ x -= ww.roomWidth; }
 	//if(x < 0){ x += ww.roomWidth; }
 	
-	if(pointInBlock(x, y)){
+	if(pointInBlock(x, y, ignoreBlackBlocks)){
 		x -= d;
 		break;
 	}
@@ -137,7 +138,7 @@ for(var i=0; i<abs(xs); i++){
 d = ys < 0 ? -1 : 1;
 for(var i=0; i<abs(ys); i++){
 	y += d;
-	if(pointInBlock(x, y)){
+	if(pointInBlock(x, y, ignoreBlackBlocks)){
 		y -= d;
 		break;
 	}

@@ -1,5 +1,8 @@
 function playerSetup(){
 	
+	
+	pc.useWarp = 0;
+	
 	pc.moveSpeed = 6;
 	
 	pc.ignoreDots = 0;
@@ -16,7 +19,7 @@ function playerSetup(){
 	pc.powerSpawn = 1;
 	pc.powerEffectTime = 30 * 4;
 	
-	
+	pc.princessChance = 1;
 	
 	pc.slow = false;
 }

@@ -21,24 +21,48 @@ if(pAlpha >= .8 && pAlphaDir > 0){ pAlphaDir *= -1; }
 
 if(state == "play"){
 	
-	if(scatterTime > 0){
-		scatterTime --;
-	} else {
-		scatterCD --;
-		if(scatterCD < 1){
-			scatterCD = scatterCDMax;
-			scatterTime = scatterTimeMax;
-			scatterCDMax += 90;
-			with(objMob){
-				xLast = xSpot;
-				yLast = ySpot;
+	if(pc.powerTime < 1){
+		
+		if(scatterTime > 0){
+			scatterTime --;
+		} else {
+			scatterCD --;
+			if(scatterCD < 1){
+				scatterCD = scatterCDMax;
+				scatterTime = scatterTimeMax;
+				scatterCDMax += 90;
+				with(objMob){
+					xLast = xSpot;
+					yLast = ySpot;
+				}
 			}
+		}
+		
+		
+		
+		if(choose(true, false) && choose(true, true, false) || pc.stage < 15){
+			princessTime -= pc.princessChance;
+			if(princessTime < 1){
+				princessTime = princessTimeMax;
+				instance_create_depth(ww.roomWidth + 32, room_height + 32, pc.depth - 1, objPrincess);
+			}
+		}
+		
+		
+		
+		if(pc.useWarp >= pc.useWarpMax && pc.x > 32 && pc.x < ww.roomWidth - 32){
+			if(ww.bmap[0, pc.ySpot] == noone){
+				ww.bmap[0, pc.ySpot] = imgBlockBlack;
+				ww.bmap[23, pc.ySpot] = imgBlockBlack;
+			}
+			
+			pc.useWarp = ceil(pc.useWarp / 2);
 		}
 	}
 	
 	
 	
-	if(pc.stage > 30 && irandom_range(0, 500) == 1){
+	/*if(pc.stage > 30 && irandom_range(0, 500) == 1){
 		var aa = irandom_range(0, 20);
 		var bb = irandom_range(0, 20);
 		var rng = 5;
@@ -50,7 +74,7 @@ if(state == "play"){
 			h: rng,
 			cd: 150,
 		}
-	}
+	}*/
 	
 	
 	

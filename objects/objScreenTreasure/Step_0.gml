@@ -23,6 +23,7 @@ if(pc.pressedEnter){
 	if(perk[cur] == ww.ppPowerEffect){ pc.powerEffectTime += 30 * 4; }
 	if(perk[cur] == ww.ppPowerTime){ pc.powerTimeMax += 60; }
 	if(perk[cur] == ww.ppSpeedUp){ pc.moveSpeed += 1; }
+	if(perk[cur] == ww.ppPrincessChance){ pc.princessChance += 1; }
 	
 	with(objMob){ if(isEnemy){ stun = clamp(stun, 30, 30 * 10); } }
 	

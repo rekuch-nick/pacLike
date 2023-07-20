@@ -11,12 +11,10 @@ function worldGen(){
 	gotChest = false;
 	
 	
-	for(var a=0; a<24; a++){
-		for(var b=0; b<24; b++){
+	for(var a=0; a<24; a++){ for(var b=0; b<24; b++){
 			pmap[a, b] = noone;
 			bmap[a, b] = imgBlock;
-		}
-	}
+	}}
 	
 	worldGenMazeFrom(1, 1);
 	repeat(20){ worldGenRemoveRandomBlock(); }

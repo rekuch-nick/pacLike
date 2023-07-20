@@ -25,3 +25,4 @@ ppPowerAmount = "More Power Pellets";
 ppPowerTime = "Power Pellets Last Longer";
 ppPowerEffect = "Longer Enemy Ghost-time";
 ppSpeedUp = "Move a little faster";
+ppPrincessChance = "Princess More Frequent";

@@ -60,8 +60,10 @@ d = xs < 0 ? -1 : 1;
 for(var i=0; i<abs(xs); i++){
 	x += d;
 	
-	if(x >= ww.roomWidth){ x -= ww.roomWidth; }
-	if(x < 0){ x += ww.roomWidth; }
+	
+	if(x >= ww.roomWidth){ x -= ww.roomWidth; useWarp ++; }
+	if(x < 0){ x += ww.roomWidth; useWarp ++; }
+	
 	
 	if(pointInBlock(x, y)){
 		x -= d;
