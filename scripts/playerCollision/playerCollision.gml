@@ -7,6 +7,7 @@ function playerCollision(){
 			if(isEnemy && stun < 1 && hurtTime < 1){
 				if(pc.powerTime > 0){
 					hurtTime = pc.powerEffectTime;
+					if(diesWhenKilled){ instance_destroy(); }
 				} else {
 					ww.state = "ded"; ////
 				}
@@ -15,6 +16,13 @@ function playerCollision(){
 			if(isTreasure){
 				instance_create_depth(0, 0, -999, objScreenTreasure);
 				instance_destroy();
+			}
+		}
+		
+		if(showMimic && sprite_index == imgTreasure && stun < 12){
+			var dis = abs(xSpot - pc.xSpot) + abs(ySpot - pc.ySpot);
+			if(dis <= showMimicRange){
+				sprite_index = imgMimic;
 			}
 		}
 	}

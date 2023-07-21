@@ -1,3 +1,4 @@
-function inBounds(a, b){
-	return a >= 0 && b >= 0 && a < 24 && b < 24;
+function inBounds(a, b, reduce){
+	if(is_undefined(reduce)){ reduce = 0; }
+	return a >= 0 + reduce && b >= 0 + reduce && a < 24 - reduce && b < 24 - reduce;
 }

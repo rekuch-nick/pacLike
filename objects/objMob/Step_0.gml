@@ -1,5 +1,11 @@
 if(ww.state != "play"){ return; }
-
+if(limitedDots){ 
+	dotsLeft -= pc.dotsThisFrame; 
+	if(dotsLeft < 1){
+		instance_destroy();
+		return;
+	}
+}
 
 if(stun > 0){
 	stun --;
@@ -64,10 +70,10 @@ if(dir == 0){
 			}
 		} else if(moveType == "ambush"){
 			xTar = pc.xSpot; yTar = pc.ySpot;
-			if(pc.dir == 1){ yTar -= 4; }
-			if(pc.dir == 2){ xTar += 4; }
-			if(pc.dir == 3){ yTar += 4; }
-			if(pc.dir == 4){ xTar -= 4; }
+			if(pc.dir == 1){ yTar -= 6; }
+			if(pc.dir == 2){ xTar += 6; }
+			if(pc.dir == 3){ yTar += 6; }
+			if(pc.dir == 4){ xTar -= 6; }
 		} else {
 			xTar = pc.xSpot; yTar = pc.ySpot;
 		}

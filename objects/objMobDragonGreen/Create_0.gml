@@ -1,14 +1,14 @@
 event_inherited();
 
-moveSpeed = 4;
-if(pc.stage < 6){ moveSpeed --; }
-if(pc.stage > 22){ moveSpeed ++; }
+moveSpeed = 3;
+if(pc.stage >= ww.llSpeed1){ moveSpeed ++; }
+if(pc.stage >= ww.llSpeed2){ moveSpeed ++; }
 moveType = "ambush";
 //moveType = "ambush2";
 stun = 90;
 
 
-if(pc.stage > 15){
+if(pc.stage >= ww.llSpellGreen){
 	effect = imgWeb;
 	effCDMax = 30 * 10;
 	effCD = effCDMax / 5;

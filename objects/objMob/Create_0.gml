@@ -26,3 +26,9 @@ effCD = effCDMax / 5;
 effect = noone;
 
 ignoreBlackBlocks = false;
+showMimic = false;
+showMimicRange = 6;
+diesWhenKilled = false;
+
+limitedDots = false;
+dotsLeft = 30;

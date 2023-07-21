@@ -1,5 +1,10 @@
 playerInput();
 
+if(ww.state == "pause"){
+	if(pressedEnter || pressedEsc){ ww.state = "play"; return; }
+}
+
+
 if(ww.state == "ded"){
 	image_alpha = irandom_range(0, 1);
 	image_xscale = abs(image_xscale) + .03;
@@ -29,7 +34,7 @@ if(ww.state == "ded"){
 
 
 if(ww.state != "play"){ return; }
-
+dotsThisFrame = 0;
 
 playerCollision();
 
@@ -44,6 +49,7 @@ if(pressingSpace){ dir = 0; }
 xs = 0;
 ys = 0;
 ms = moveSpeed;
+if(powerTime > 0){ ms ++; }
 
 if(dir == 2){ xs = ms; }
 if(dir == 4){ xs = -ms; }
@@ -66,6 +72,8 @@ for(var i=0; i<abs(xs); i++){
 	
 	
 	if(pointInBlock(x, y)){
+		playerDig(d, 0);
+		
 		x -= d;
 		break;
 	}
@@ -76,6 +84,8 @@ d = ys < 0 ? -1 : 1;
 for(var i=0; i<abs(ys); i++){
 	y += d;
 	if(pointInBlock(x, y)){
+		playerDig(0, d);
+		
 		y -= d;
 		break;
 	}
@@ -96,19 +106,30 @@ xSpot = floor(x / 32); ySpot = floor(y / 32);
 for(var a=xSpot-magRange; a<=xSpot+magRange; a++){ for(var b=ySpot-magRange; b<=ySpot+magRange; b++){
 	if(abs(a - xSpot) + abs(b - ySpot) > magRange){ continue; }
 	if(!inBounds(a, b)){ continue; }
-	if(ww.pmap[a, b] == imgPill){
+	if(ww.pmap[a, b] == imgPill || ww.pmap[a, b] == imgPillSpawn){
+		dotsThisFrame ++;
 		ww.pmap[a, b] = noone;
 		ww.pills --;
-		sp += scorefromDots;
+		var s = scorefromDots;
+		if(ww.pmap[a, b] == imgPillSpawn){ s = 0; }
+		sp += s;
 		
-		if(ww.pills == floor(ww.pillsMax * .75)){ with(objMob){ if(moveSpeed < pc.moveSpeed){ moveSpeed += rage01; } } }
-		if(ww.pills == floor(ww.pillsMax *  .5)){ with(objMob){ if(moveSpeed < pc.moveSpeed){ moveSpeed += rage02; } } }
-		if(ww.pills == floor(ww.pillsMax * .25)){ with(objMob){ if(moveSpeed < pc.moveSpeed){ moveSpeed += rage03; } } }
+		if(ww.pills == floor(ww.pillsMax * .75)){ with(objMob){ if(moveSpeed < pc.moveSpeed){ moveSpeed += rage01; rage01 = 0; } } }
+		if(ww.pills == floor(ww.pillsMax *  .5)){ with(objMob){ if(moveSpeed < pc.moveSpeed){ moveSpeed += rage02; rage02 = 0;} } }
+		if(ww.pills == floor(ww.pillsMax * .25)){ with(objMob){ if(moveSpeed < pc.moveSpeed){ moveSpeed += rage03; rage03 = 0;} } }
 		
-		if(!ww.gotChest && instance_number(objTreasure) < 1){
+		if(!ww.gotChest && (instance_number(objTreasure) + instance_number(objMimic)) < 1){
+			var t = objTreasure;
+			if(stage >= ww.llMimic1 ){ t = choose(objTreasure, objTreasure, objTreasure, objTreasure, objMimic); }
+			if(stage >= ww.llMimic2 ){ t = choose(objTreasure, objTreasure, objTreasure, objMimic); }
+			if(stage >= ww.llMimic3 ){ t = choose(objTreasure, objTreasure, objMimic); }
+			if(stage >= ww.llMimic4 ){ t = choose(objTreasure, objMimic); }
+			if(irandom_range(0, 99) < mimicReduction){ t = objTreasure; }
+			
+			
 			if(ww.pills == floor(ww.pillsMax *  .6) || (ww.pills < floor(ww.pillsMax *  .6) && irandom_range(1, 10) == 1)){ 
 				var a = 0; var b = ww.wrapRow;
-				instance_create_depth(a * 32 + 16, b * 32 + 16, ww.depth - 1, objTreasure);
+				instance_create_depth(a * 32 + 16, b * 32 + 16, ww.depth - 1, t);
 			}
 		}
 		
@@ -167,7 +188,7 @@ if(powerTime > 0){
 if(dir == 0){ image_index = 0; }
 
 
-
+if(pressedEsc){ ww.state = "pause"; }
 
 if(keyboard_check_pressed(vk_backspace)){ ww.state = "gen"; }
 if(keyboard_check_pressed(vk_f1)){ 

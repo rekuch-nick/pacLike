@@ -34,6 +34,7 @@ if(state == "play"){
 				with(objMob){
 					xLast = xSpot;
 					yLast = ySpot;
+					dir = 0;
 				}
 			}
 		}
@@ -76,13 +77,36 @@ if(state == "play"){
 		}
 	}*/
 	
+	//wandering neg dots
+	var n = 0;
+	if(pc.stage >= ww.llDotWander){ n = clamp(pc.stage, 0, 100); }
+	for(var i=0; i<n; i++){
+		var a = irandom_range(1, 22);
+		var b = irandom_range(1, 22);
+		if(ww.pmap[a, b] == imgPillNeg){
+			var aa = a; var bb = b;
+			if(choose(true, false)){
+				aa += choose(-1, 1);
+			} else {
+				bb += choose(-1, 1);
+			}
+		
+			if(inBounds(aa, bb, 1) && bmap[aa, bb] == noone){
+				var old = pmap[a, b];
+				pmap[a, b] = pmap[aa, bb];
+				pmap[aa, bb] = old;
+			}
+		}
+	}
+	
+	
 	
 	
 	for(var i=0; i<array_length(fmaps); i++){
 		fmaps[i].cd --;
 		
-		var m = fmaps[i];
-		if(m.cd < 1 && m.img == imgTarget){
+		var m = fmaps[i]; 
+		if(m.cd < 1 && m.img == imgTarget){ // bombs turn to fire
 			fmaps[i].img = imgFire;
 			fmaps[i].cd = 120 + 10 * pc.stage;
 		}

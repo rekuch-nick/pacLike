@@ -1,15 +1,25 @@
 function worldGen(){
-	pc.stage ++;
-	random_set_seed(seed);
-	for(var i=0; i<pc.stage * 20; i++){
-		var n = irandom_range(1, 100);
+	
+	if(pc.stage == 0){
+		var spellTime = [15, 20, 25, 30];
+		var spellTimeShuff = array_shuffle(spellTime);
+		llSpellBlue = spellTimeShuff[0];
+		llSpellRed = spellTimeShuff[1];
+		llSpellGreen = spellTimeShuff[2];
+		llSpellYellow = spellTimeShuff[3];
 	}
 	
+	pc.dir = 0;
+	pc.stage ++;
+	random_set_seed(seed);
+	for(var i=0; i<pc.stage * 2; i++){ var n = irandom_range(1, 100); }
 	
+	trapTime = pc.stage > llTrapTime ? 1.5 : 1;
 	
 	with(objMob){ instance_destroy(); }
 	gotChest = false;
 	
+	pc.picks = pc.picksPerStage;
 	
 	for(var a=0; a<24; a++){ for(var b=0; b<24; b++){
 			pmap[a, b] = noone;
@@ -17,7 +27,13 @@ function worldGen(){
 	}}
 	
 	worldGenMazeFrom(1, 1);
+	
+	
 	repeat(20){ worldGenRemoveRandomBlock(); }
+	
+	if(irandom_range(1, 100) == 1){
+		repeat(70){ worldGenRemoveRandomBlock(); }
+	}
 	
 	
 	for(var i=0; i<choose(1, 2); i++){
@@ -67,4 +83,23 @@ function worldGen(){
 	
 	
 	randomize();
+	
+	
+	
+	
+	//help text
+	worldGenHelpText();
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

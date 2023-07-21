@@ -11,6 +11,7 @@ with(objMob){ if(isEnemy && hurtTime < 1){
 	if(abs(y - other.y) < 16){
 		hurtTime = floor(pc.powerEffectTime / 2);
 		if(other.drawTo > x){ other.drawTo = x; }
+		if(diesWhenKilled){ instance_destroy(); }
 	}
 }}
 

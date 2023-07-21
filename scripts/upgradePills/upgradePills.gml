@@ -22,9 +22,10 @@ function upgradePills(){
 		}
 	}
 	
-	if(pc.stage >= 9){ n = 1; }
-	if(pc.stage >= 19){ n = 2; }
-	if(pc.stage >= 29){ n = 3; }
+	if(pc.stage >= llNegPill1 ){ n = 1; }
+	if(pc.stage >= llNegPill2 ){ n = 2; }
+	if(pc.stage >= llNegPill3 ){ n = 3; }
+	if(pc.stage >= llNegPill4 ){ n = 5; }
 	while(n > 0 && tries < 30000){
 		tries ++;
 		

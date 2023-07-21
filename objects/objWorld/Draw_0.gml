@@ -1,4 +1,5 @@
 
+
 var pointsString = "" + string(pc.sp);
 var n = 9 - string_length(pointsString);
 for(var i=0; i<n; i++){
@@ -11,11 +12,20 @@ draw_text(770, 40, "Room " + string(pc.stage) );
 draw_sprite_stretched(imgPlayerSmall, 0, 770, 730, 32, 32);
 draw_text(806, 736, "x " + string(pc.hp));
 
+if(pc.picks > 0){
+	draw_sprite_stretched(imgPlayerPickSmall, 0, 770, 694, 32, 32);
+	draw_text(806, 700, "x " + string(pc.picks));
+}
+
+
+
+draw_sprite_stretched(ww.helpIcon, 0, 824, 250, 64, 64);
+draw_text_ext_transformed(780, 330, ww.helpText, 22, 180, 1, 1, 0);
 
 
 
 
-if(state == "play"){
+if(state == "play" || state == "pause"){
 	
 	for(var i=0; i<array_length(fmaps); i++){
 		var m = fmaps[i];
@@ -53,3 +63,10 @@ if(state == "play"){
 		//draw_rectangle_color(a * 32, b * 32, a * 32 + 31, b * 32 + 31, c_dkgray, c_dkgray, c_dkgray, c_dkgray, true);
 	}}
 }
+
+
+if(pc.seeRest){
+	draw_text(770, 80, "REST " + string(floor(scatterCD / 10))); 
+}
+//draw_text(0, 0, "" + string(floor(scatterCD / 10))); 
+//draw_text(150, 0, string(floor(scatterTime / 10)));
